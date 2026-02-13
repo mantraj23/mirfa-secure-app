@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-     "build": "pnpm --filter @repo/crypto build && pnpm --filter @repo/db build && pnpm --filter @repo/db exec prisma generate",
+     "build": "pnpm --filter @repo/crypto build && pnpm --filter @repo/db build && pnpm --filter @repo/db exec prisma generate && tsc",
     "start": "node dist/index.js",
     "check-types": "tsc --noEmit"
   },
