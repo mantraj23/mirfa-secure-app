@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String         @id @default(uuid())
+  email     String         @unique
+  password  String         // Hashed password
+  name      String?
+  records   SecureRecord[] // Relation: User owns many records
+  createdAt DateTime       @default(now())
+}
+
+model SecureRecord {
+  id             String   @id @default(uuid())
+  createdAt      DateTime @default(now())
+
+  // Owner
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+
+  // Party Info
+  partyId        String
+
+  // Envelope Encryption Data
+  payload_nonce  String
+  payload_ct     String   // The Secret Data
+  payload_tag    String
+
+  dek_wrap_nonce String
+  dek_wrapped    String   // The DEK (Encrypted by Master Key)
+  dek_wrap_tag   String
+
+  alg            String   @default("AES-256-GCM")
+  mk_version     Int      @default(1)
+}

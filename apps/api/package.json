@@ -1,0 +1,26 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "ts-node-esm index.ts",
+    "start": "ts-node-esm index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "fastify": "^5.0.0",
+    "@fastify/cors": "^10.0.0",
+    "@fastify/jwt": "^9.0.0",
+    "@repo/db": "workspace:*",
+    "@repo/crypto": "workspace:*",
+    "bcryptjs": "^2.4.3",
+    "zod": "^3.23.0",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "@types/bcryptjs": "^2.4.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
