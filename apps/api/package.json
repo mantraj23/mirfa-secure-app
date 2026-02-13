@@ -5,8 +5,9 @@
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
+    "predev": "pnpm --filter @repo/crypto build && pnpm --filter @repo/db build",
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "pnpm --filter @repo/crypto build && pnpm --filter @repo/db build && prisma generate",
     "start": "node dist/index.js",
     "check-types": "tsc --noEmit"
   },
