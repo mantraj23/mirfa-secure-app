@@ -25,7 +25,7 @@
     /* ========================= */
     /* Output Settings           */
     /* ========================= */
-    "rootDir": "src",
+    "rootDir": "./",
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
