@@ -1,8 +1,8 @@
 import crypto from "crypto";
-import { decryptGCM } from "./gcm";
-import { SecureTransaction } from "./types";
-import { CryptoErrors } from "./errors";
-import { colors, logBoxHeader, logBoxFooter, logEntry } from "./logger";
+import { decryptGCM } from "./gcm.js";
+import { SecureTransaction } from "./types.js";
+import { CryptoErrors } from "./errors.js";
+import { colors, logBoxHeader, logBoxFooter, logEntry } from "./logger.js";
 
 export const decryptTransaction = (
   record: SecureTransaction,

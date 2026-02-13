@@ -13,5 +13,5 @@
     "skipLibCheck": true
   },
   "include": ["index.ts"],
-  "exclude": ["prisma.config.ts"]
+  "exclude": ["dist", "node_modules"]
 }

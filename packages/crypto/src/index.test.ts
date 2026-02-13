@@ -10,7 +10,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { encryptTransaction, decryptTransaction, CryptoErrors } from './index';
+import { encryptTransaction, decryptTransaction, CryptoErrors } from './index.js';
 
 // A valid 64-character hex Master Key for testing
 const MOCK_MASTER_KEY = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";

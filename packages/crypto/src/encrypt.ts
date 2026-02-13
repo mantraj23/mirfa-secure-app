@@ -1,7 +1,7 @@
 import crypto from "crypto";
-import { encryptGCM } from "./gcm";
-import { SecureTransaction } from "./types";
-import { colors, logBoxHeader, logBoxFooter, logEntry } from "./logger";
+import { encryptGCM } from "./gcm.js";
+import { SecureTransaction } from "./types.js";
+import { colors, logBoxHeader, logBoxFooter, logEntry } from "./logger.js";
 
 export const encryptTransaction = (
   partyId: string,
