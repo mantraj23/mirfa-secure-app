@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    /* ========================= */
+    /* Language and Environment  */
+    /* ========================= */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+
+    /* ========================= */
+    /* ESM + Node Compatibility  */
+    /* ========================= */
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+
+    /* ========================= */
+    /* Strict Type Safety        */
+    /* ========================= */
+    "strict": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+
+    /* ========================= */
+    /* Output Settings           */
+    /* ========================= */
+    "rootDir": "src",
+    "outDir": "dist",
+    "sourceMap": true,
+    "declaration": true,
+
+    /* ========================= */
+    /* Turbo / Monorepo Support  */
+    /* ========================= */
+    "baseUrl": ".",
+    "paths": {
+      "@repo/db": ["../../packages/db/src"],
+      "@repo/crypto": ["../../packages/crypto/src"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

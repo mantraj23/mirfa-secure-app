@@ -1,0 +1,7 @@
+export const CryptoErrors = {
+  INTEGRITY_FAIL: "ER-4001",
+  INVALID_NONCE: "ER-4002",
+  INVALID_KEY: "ER-4003",
+  CIPHERTEXT_CORRUPT: "ER-4004",
+  UNKNOWN: "ER-5000"
+};
