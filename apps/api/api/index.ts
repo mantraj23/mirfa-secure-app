@@ -1,5 +1,5 @@
 import serverless from "serverless-http";
-import { buildServer } from "../src/server";
+import { buildServer } from "../src/server.js";
 
 let server: any;
 
