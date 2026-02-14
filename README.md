@@ -1,135 +1,102 @@
-# Turborepo starter
+# Mirfa Secure Transaction App 🔒
 
-This Turborepo starter is maintained by the Turborepo core team.
+A secure transaction processing application built for the Mirfa Engineering Challenge, featuring Envelope Encryption (AES-256-GCM), TurboRepo, and Docker support.
 
-## Using this example
+---
 
-Run the following command:
+## 🚀 Live Demo
 
-```sh
-npx create-turbo@latest
+**Frontend:**  
+https://mirfa-secure-app-web-ivory.vercel.app/
+
+**Backend:**  
+https://api-production-5ffc.up.railway.app/
+
+---
+
+## 🔑 Core Security (Envelope Encryption)
+
+We use a two-tier key architecture to ensure maximum security:
+
+- **Data Encryption Key (DEK):** Unique 32-byte key generated per transaction. Encrypts the payload.
+- **Master Key (KEK):** System-wide key. Encrypts the DEK.
+- **Storage:** Only encrypted payloads, wrapped DEKs, and nonces are stored. Plaintext keys never touch the disk.
+
+---
+
+## 🛠 Quick Start
+
+### 1️⃣ Setup
+
+```bash
+git clone <your-repo-url>
+cd mirfa-secure-app
+pnpm install
 ```
 
-## What's inside?
+---
 
-This Turborepo includes the following packages/apps:
+### 2️⃣ Environment Variables (`.env`)
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+```env
+DATABASE_URL="your_postgres_databse_url"
+MASTER_KEY="<your_64_char_hex_key>" # Generate: openssl rand -hex 32
+PORT=3001
+NEXT_PUBLIC_API_URL="http://localhost:3001"
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+### 3️⃣ Run Locally
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm db:push     # Push schema to DB (defined in packages/db)
+pnpm build       # Runs build scripts 
+pnpm dev         # Start Frontend (3000) & Backend (3001)
 ```
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+### 4️⃣ Run via Docker
 
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+docker build -t mirfa-api .
+docker run -p 3001:3001 --env-file .env mirfa-api
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+---
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+## 📂 Architecture
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+### 🧰 Tech Stack
 
-### Remote Caching
+- **Frontend:** Next.js 14
+- **Backend:** Fastify,  Prisma (Postgres-Neon)
+- **Shared Packages:**
+  - `@repo/crypto` → AES-GCM encryption logic
+  - `@repo/db` → Prisma Client
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+---
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+## 🔌 API Endpoints
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+| Method | Endpoint            | Description                               |
+|--------|--------------------|-------------------------------------------|
+| POST   | `/auth/signup`     | Register new user                        |
+| POST   | `/auth/login`      | Login & get JWT                          |
+| POST   | `/tx/encrypt`      | Encrypt payload & store record           |
+| GET    | `/tx`              | List user's encrypted records            |
+| POST   | `/tx/:id/decrypt`  | Decrypt record (Server-side unwrapping)  |
 
-```
-cd my-turborepo
+---
 
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
+## 🧪 Testing
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
+Run the Vitest suite to verify encryption integrity and tamper resistance:
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+cd packages/crypto
+pnpm test
 ```
 
-## Useful Links
-
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+---
