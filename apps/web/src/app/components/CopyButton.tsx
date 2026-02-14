@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { LucideCopy, LucideCheck } from 'lucide-react';
 
+
 interface CopyButtonProps {
   text: string;
   className?: string;

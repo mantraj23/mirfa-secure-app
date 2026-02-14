@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { LucideLock, LucideShieldCheck } from 'lucide-react';
+import {API_URL} from '../constants/BackendApi' ;
 
 import { RecordType } from '../types';
 import RecordItem from './RecordItem';
@@ -19,7 +20,7 @@ export default function Dashboard({ token }: DashboardProps) {
   const [loading, setLoading] = useState(false);
 
   const fetchRecords = async () => {
-    const res = await fetch('http://localhost:3001/tx', {
+    const res = await fetch(`${API_URL}/tx`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
@@ -37,7 +38,7 @@ export default function Dashboard({ token }: DashboardProps) {
     try {
       setLoading(true);
 
-      const res = await fetch('http://localhost:3001/tx/encrypt', {
+      const res = await fetch(`${API_URL}/tx/encrypt`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

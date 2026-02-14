@@ -1,5 +1,5 @@
 'use client';
-
+import {API_URL} from '../constants/BackendApi' ;
 import { useState } from 'react';
 
 interface AuthScreenProps {
@@ -21,7 +21,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
     try {
       const endpoint = isLogin ? '/auth/login' : '/auth/signup';
 
-      const res = await fetch(`http://localhost:3001${endpoint}`, {
+      const res = await fetch(`${API_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password, name: 'User' })

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { LucideLock, LucideUnlock, LucideLoader2 } from 'lucide-react';
+import {API_URL} from '../constants/BackendApi' ;
 
 import { RecordType } from '../types';
 import CopyButton from './CopyButton';
@@ -31,7 +32,7 @@ export default function RecordItem({
       setLoading(true);
 
       const res = await fetch(
-        `http://localhost:3001/tx/${record.id}/decrypt`,
+        `${API_URL}/tx/${record.id}/decrypt`,
         {
           method: 'POST',
           headers: { Authorization: `Bearer ${token}` }
