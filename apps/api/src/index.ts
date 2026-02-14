@@ -1,12 +1,11 @@
 import { buildServer } from './server.js';
-// console.log("MASTER_KEY length:", process.env.MASTER_KEY?.length);
 
 const start = async () => {
   const app = await buildServer();
   const port = Number(process.env.PORT) || 3001;
   try {
     await app.listen({ port, host: '0.0.0.0' });
-    console.log('✅ API running on http://localhost:3001');
+    console.log(`✅ API running on http://localhost:${port}`);
   } catch (err) {
     app.log.error(err);
     process.exit(1);
