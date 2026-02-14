@@ -1,4 +1,5 @@
 import { buildServer } from './server.js';
+console.log("MASTER_KEY length:", process.env.MASTER_KEY?.length);
 
 const start = async () => {
   const app = await buildServer();

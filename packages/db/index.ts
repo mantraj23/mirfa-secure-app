@@ -13,3 +13,11 @@ export const prisma =
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export * from '@prisma/client';
+
+
+/*
+taskkill /IM "Docker Desktop.exe" /F
+taskkill /IM "com.docker.backend.exe" /F
+taskkill /IM "com.docker.service" /F
+wsl --shutdown
+*/

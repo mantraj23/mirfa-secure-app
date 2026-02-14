@@ -10,8 +10,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
-    "prisma:generate": "prisma generate"
+    "build": "tsc && prisma generate", 
+    "db:push": "prisma db push"
   },
   "keywords": [],
   "author": "",

@@ -1,0 +1,46 @@
+1. Ignore Dependencies (The biggest speed killer)
+
+We ignore these because we install them fresh inside the container
+
+node_modules
+**/node_modules
+
+2. Ignore Build Artifacts & Caches
+
+These are heavy and platform-specific
+
+**/dist
+**/build
+**/.next
+**/.turbo
+**/.cache
+coverage
+
+3. Ignore Version Control History
+
+.git can be massive and isn't needed for the build
+
+.git
+.gitignore
+
+4. Ignore Environment Files
+
+Security: Don't bake secrets into the image. Pass them at runtime.
+
+.env
+.env.*
+!.env.example
+
+5. Ignore Logs
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+6. Ignore IDE/OS Files
+
+.vscode
+.idea
+.DS_Store
+Thumbs.db

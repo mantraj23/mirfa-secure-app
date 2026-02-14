@@ -2,21 +2,19 @@
   "compilerOptions": {
     "target": "ES2022",
     "lib": ["ES2022"],
-
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-
-    "rootDir": "src",
-    "outDir": "./dist",
+    
+    "rootDir": "src", 
+    "outDir": "dist",
 
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
-
     "sourceMap": true,
     "declaration": false
   },
-  "include": ["src", "api"],
+  "include": ["src"],
   "exclude": ["node_modules", "dist"]
 }

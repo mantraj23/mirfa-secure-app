@@ -6,5 +6,6 @@ export default defineConfig({
   datasource: {
     // This ensures the URL is read from the loaded environment variables
     url: process.env.DATABASE_URL ?? "",
+    
   },
 });
