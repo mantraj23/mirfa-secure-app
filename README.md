@@ -14,6 +14,12 @@ https://api-production-5ffc.up.railway.app/
 
 ---
 
+## Loom Video 
+https://www.loom.com/share/eef0535e7efa44f697895bceb1940cce
+
+
+-----
+
 ## 🔑 Core Security (Envelope Encryption)
 
 We use a two-tier key architecture to ensure maximum security:
