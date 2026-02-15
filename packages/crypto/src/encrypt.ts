@@ -21,7 +21,6 @@ export const encryptTransaction = (
 
   const k = encryptGCM(dek, mk);
 
-  // 🔐 SAFE LOGGING (no sensitive info)
   logEntry("Party ID", partyId, "👤");
   logEntry("Payload Size", `${payloadBuf.length} bytes`, "📦");
   logEntry("Algorithm", "AES-256-GCM (Envelope)", "🔐");

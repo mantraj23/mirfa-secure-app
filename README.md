@@ -42,7 +42,7 @@ pnpm install
 DATABASE_URL="your_postgres_databse_url"
 MASTER_KEY="<your_64_char_hex_key>" # Generate: openssl rand -hex 32
 PORT=3001
-NEXT_PUBLIC_API_URL="http://localhost:3001"
+JWT_SECRET= your_jwt_secret
 ```
 
 ---
