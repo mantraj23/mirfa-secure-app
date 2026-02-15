@@ -19,6 +19,8 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
   const [password, setPassword] = useState('');
 
   const [error, setError] = useState<string | null>(null);
+  // 1. Add state for success message
+  const [success, setSuccess] = useState<string | null>(null); 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -34,6 +36,7 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
     e.preventDefault();
 
     setError(null);
+    setSuccess(null); 
     setFieldErrors({});
 
     if (!email || !password) {
@@ -62,12 +65,9 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
         let extractedFieldErrors: FieldErrors = {};
         let message = 'Something went wrong';
 
-        // 🔥 CASE 1: { error: "string" }
         if (typeof data?.error === 'string') {
           let parsed;
-
           try {
-            // Try parsing if it's stringified JSON (your case)
             parsed = JSON.parse(data.error);
           } catch {
             parsed = null;
@@ -79,38 +79,36 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                 extractedFieldErrors[e.path[0] as keyof FieldErrors] = e.message;
               }
             });
-
             if (Object.keys(extractedFieldErrors).length > 0) {
               setFieldErrors(extractedFieldErrors);
               return;
             }
-
             message = parsed.map((e: any) => e.message).join(', ');
           } else {
             message = data.error;
           }
-        }
-
-        // 🔥 CASE 2: Raw array
-        else if (Array.isArray(data)) {
+        } else if (Array.isArray(data)) {
           data.forEach((e: any) => {
             if (e?.path?.[0]) {
               extractedFieldErrors[e.path[0] as keyof FieldErrors] = e.message;
             }
           });
-
           if (Object.keys(extractedFieldErrors).length > 0) {
             setFieldErrors(extractedFieldErrors);
             return;
           }
-
           message = data.map((e: any) => e.message).join(', ');
         }
-
         throw new Error(message);
       }
 
-      onLogin(data.token);
+      if (isLogin) {
+        onLogin(data.token);
+      } else {
+        setIsLogin(true);
+        setSuccess('Account created successfully! Please login.');
+      }
+
     } catch (err: any) {
       setError(err.message || 'Unexpected error occurred');
     } finally {
@@ -151,6 +149,16 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
               {error}
             </motion.div>
           )}
+          {success && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="bg-green-500/10 text-green-400 p-3 rounded-lg text-sm border border-green-500/30 mb-4"
+            >
+              {success}
+            </motion.div>
+          )}
         </AnimatePresence>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -164,7 +172,10 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                   : 'border-zinc-700 focus:border-blue-500'
               }`}
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if(success) setSuccess(null);
+              }}
               disabled={loading}
               required
             />
@@ -185,11 +196,13 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
                   : 'border-zinc-700 focus:border-blue-500'
               }`}
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if(success) setSuccess(null); 
+              }}
               disabled={loading}
               required
             />
-
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
@@ -218,7 +231,10 @@ export default function AuthScreen({ onLogin }: AuthScreenProps) {
 
         <div className="mt-6 text-center">
           <button
-            onClick={() => setIsLogin(!isLogin)}
+            onClick={() => {
+                setIsLogin(!isLogin);
+                setSuccess(null); 
+            }}
             disabled={loading}
             className="text-sm text-gray-500 hover:text-white transition-colors"
           >
